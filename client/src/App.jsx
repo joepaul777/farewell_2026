@@ -161,41 +161,11 @@ export default function App() {
                   <div className="floatingDot dot3" />
                 </div>
 
-                <div className="invitePaper inviteFront">
-                  <div className="inviteTop">
-                    <div className="kicker anim a1">A farewell from your juniors</div>
-                    <div className="titleStack anim a2">
-                      <div className="titleTop">{invite.titleTop}</div>
-                      <div className="titleBottom">{invite.titleBottom}</div>
-                    </div>
-                    <p className="lead anim a3">{invite.line1}</p>
-                  </div>
-
-                  <div className="inviteMetaGrid anim a4">
-                    <div className="metaRow">
-                      <div className="metaLabel">Date</div>
-                      <div className="metaValue">{invite.date}</div>
-                    </div>
-                    <div className="metaRow">
-                      <div className="metaLabel">Time</div>
-                      <div className="metaValue">{invite.time}</div>
-                    </div>
-                    <div className="metaRow">
-                      <div className="metaLabel">Venue</div>
-                      <div className="metaValue">{invite.venue}</div>
-                    </div>
-                    <div className="metaRow">
-                      <div className="metaLabel">Note</div>
-                      <div className="metaValue">{invite.note}</div>
-                    </div>
-                  </div>
-
-                  <div className="inviteActions anim a5">
-                    <Link className="btnPrimary" to="/memories">
+                <div className="invitePaper inviteFront inviteMinimal">
+                  <div className="inviteCenter">
+                    <div className="alvida anim a2">ALVIDA 2026</div>
+                    <Link className="btnPrimary anim a4" to="/memories">
                       Continue
-                    </Link>
-                    <Link className="btnGhost" to="/programs">
-                      Programs
                     </Link>
                   </div>
                 </div>

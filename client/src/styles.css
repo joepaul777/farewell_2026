@@ -220,6 +220,48 @@ a {
   padding: 18px;
 }
 
+.inviteMinimal {
+  padding: 22px 18px;
+}
+
+.inviteCenter {
+  min-height: calc(100svh - 62px - 44px);
+  display: grid;
+  place-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.alvida {
+  font-weight: 900;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: var(--burgundy2);
+  font-size: 44px;
+  line-height: 1.02;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  animation: alvidaGlow 1800ms ease-in-out infinite;
+}
+
+@media (max-width: 420px) {
+  .alvida {
+    font-size: 38px;
+    letter-spacing: 2.2px;
+  }
+}
+
+@keyframes alvidaGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(122, 21, 52, 0));
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 10px 22px rgba(122, 21, 52, 0.18));
+    transform: translateY(-1px);
+  }
+}
+
 .invitePaper::before {
   content: "";
   position: absolute;
@@ -543,7 +585,8 @@ a {
   .floatingDot,
   .scrollHintArrow,
   .blurBlob,
-  .spark {
+  .spark,
+  .alvida {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
