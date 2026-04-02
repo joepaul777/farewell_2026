@@ -13,6 +13,8 @@
   --radius: 18px;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&display=swap");
+
 * {
   box-sizing: border-box;
 }
@@ -148,6 +150,8 @@ a {
   z-index: 0;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
+  filter: blur(12px) saturate(0.85) contrast(0.8);
+  opacity: 0.5;
 }
 
 .stripRow {
@@ -232,7 +236,7 @@ a {
   background:
     radial-gradient(900px 500px at 15% 0%, rgba(122, 21, 52, 0.22), transparent 55%),
     radial-gradient(800px 520px at 90% 15%, rgba(193, 154, 107, 0.28), transparent 60%),
-    rgba(246, 239, 227, 0.45);
+    rgba(246, 239, 227, 0.7);
   mix-blend-mode: multiply;
 }
 
@@ -310,21 +314,46 @@ a {
   animation-delay: 1.6s;
 }
 
-.alvida {
-  font-weight: 900;
-  letter-spacing: 2.6px;
+.inviteWordmark {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: start;
+  gap: 14px;
+  color: #5a1b2c;
   text-transform: uppercase;
-  color: var(--burgundy2);
-  font-size: 44px;
-  line-height: 1.02;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  font-family: "Cinzel", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.wmLeft {
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 64px;
+  line-height: 1;
   animation: alvidaGlow 1800ms ease-in-out infinite;
 }
 
+.wmRight {
+  padding-top: 8px;
+  display: grid;
+  gap: 2px;
+}
+
+.wmSmall {
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  font-size: 22px;
+  line-height: 1.05;
+  color: rgba(90, 27, 44, 0.92);
+}
+
 @media (max-width: 420px) {
-  .alvida {
-    font-size: 38px;
-    letter-spacing: 2.2px;
+  .wmLeft {
+    font-size: 52px;
+    letter-spacing: 1.8px;
+  }
+  .wmSmall {
+    font-size: 18px;
+    letter-spacing: 1px;
   }
 }
 
@@ -659,7 +688,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .anim,
-  .alvida {
+  .wmLeft {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;

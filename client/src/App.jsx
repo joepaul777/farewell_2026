@@ -228,7 +228,13 @@ export default function App() {
               <section className="inviteCover inviteNoChrome">
                 <PhotoStripsBackground />
                 <div className="inviteTextOnly">
-                  <div className="alvida anim a2">ALVIDA 2026</div>
+                  <div className="inviteWordmark anim a2" aria-label="ALVIDA Seniors Farewell">
+                    <div className="wmLeft">ALVIDA</div>
+                    <div className="wmRight">
+                      <div className="wmSmall">SENIOR&apos;S</div>
+                      <div className="wmSmall">FAREWELL</div>
+                    </div>
+                  </div>
                   <Link className="btnPrimary anim a4" to="/memories">
                     Continue
                   </Link>
