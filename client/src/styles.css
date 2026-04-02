@@ -33,6 +33,9 @@ body {
   line-height: 1.4;
 }
 
+/* Invitation page: no scrolling */
+/* (JS also locks scroll for broader browser support) */
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
@@ -125,22 +128,18 @@ a {
 
 /* Full-screen invitation cover (mobile-first) */
 .inviteCover {
-  min-height: calc(100svh - 62px);
+  min-height: 100svh;
   display: grid;
   align-items: center;
   position: relative;
-  padding: 10px 0 18px;
+  padding: 0;
 }
 
-.inviteBlur {
-  border-radius: calc(var(--radius) + 10px);
+.inviteNoChrome {
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid rgba(43, 27, 20, 0.12);
-  background: rgba(246, 239, 227, 0.35);
-}
-
-.inviteFront {
-  backdrop-filter: blur(10px);
+  border: none;
+  background: transparent;
 }
 
 .photoStrips {
@@ -192,21 +191,21 @@ a {
 
 /* strip motion */
 .stripRow.ltr .stripTrack {
-  animation: stripLtr 22s linear infinite;
+  animation: stripLtr 46s linear infinite;
 }
 
 .stripRow.rtl .stripTrack {
-  animation: stripRtl 22s linear infinite;
+  animation: stripRtl 46s linear infinite;
 }
 
 .stripRow.spd1 .stripTrack {
-  animation-duration: 22s;
+  animation-duration: 46s;
 }
 .stripRow.spd2 .stripTrack {
-  animation-duration: 28s;
+  animation-duration: 58s;
 }
 .stripRow.spd3 .stripTrack {
-  animation-duration: 34s;
+  animation-duration: 70s;
 }
 
 @keyframes stripLtr {
@@ -237,11 +236,17 @@ a {
   mix-blend-mode: multiply;
 }
 
-.inviteDecor {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
+/* Text sits above strips */
+.inviteTextOnly {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 18px 14px;
 }
 
 .blurBlob {
@@ -303,29 +308,6 @@ a {
   right: 22%;
   bottom: 18%;
   animation-delay: 1.6s;
-}
-
-.invitePaper {
-  position: relative;
-  z-index: 2;
-  border-radius: calc(var(--radius) + 6px);
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  padding: 18px;
-}
-
-.inviteMinimal {
-  padding: 22px 18px;
-}
-
-.inviteCenter {
-  min-height: calc(100svh - 62px - 44px);
-  display: grid;
-  place-items: center;
-  gap: 16px;
-  text-align: center;
 }
 
 .alvida {
@@ -677,11 +659,6 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .anim,
-  .waxSeal,
-  .floatingDot,
-  .scrollHintArrow,
-  .blurBlob,
-  .spark,
   .alvida {
     animation: none !important;
     transform: none !important;

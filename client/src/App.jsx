@@ -195,58 +195,43 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
+  useEffect(() => {
+    const isInvite = location.pathname === "/";
+    const prevOverflow = document.body.style.overflow;
+    const prevHeight = document.body.style.height;
+    const prevOverscroll = document.body.style.overscrollBehavior;
+
+    if (isInvite) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100svh";
+      document.body.style.overscrollBehavior = "none";
+    } else {
+      document.body.style.overflow = prevOverflow || "";
+      document.body.style.height = prevHeight || "";
+      document.body.style.overscrollBehavior = prevOverscroll || "";
+    }
+
+    return () => {
+      document.body.style.overflow = prevOverflow || "";
+      document.body.style.height = prevHeight || "";
+      document.body.style.overscrollBehavior = prevOverscroll || "";
+    };
+  }, [location.pathname]);
+
   return (
     <div className="page">
-      <header className="topbar">
-        <div className="brand">
-          <div className="logo">F</div>
-          <div className="brandText">
-            <div className="brandName">Farewell 2026</div>
-            <div className="brandSub">For our seniors</div>
-          </div>
-        </div>
-
-        <nav className="nav">
-          <Link className="navLink" to="/">
-            Invitation
-          </Link>
-          <Link className="navLink" to="/memories">
-            Memories
-          </Link>
-          <Link className="navLink" to="/programs">
-            Programs
-          </Link>
-        </nav>
-      </header>
-
       <main className="container">
         <Routes>
           <Route
             path="/"
             element={
-              <section className="inviteCover inviteBlur">
+              <section className="inviteCover inviteNoChrome">
                 <PhotoStripsBackground />
-                <div className="inviteDecor" aria-hidden="true">
-                  <div className="blurBlob b1" />
-                  <div className="blurBlob b2" />
-                  <div className="blurBlob b3" />
-                  <div className="spark s1" />
-                  <div className="spark s2" />
-                  <div className="spark s3" />
-                  <div className="spark s4" />
-                  <div className="waxSeal" />
-                  <div className="floatingDot dot1" />
-                  <div className="floatingDot dot2" />
-                  <div className="floatingDot dot3" />
-                </div>
-
-                <div className="invitePaper inviteFront inviteMinimal">
-                  <div className="inviteCenter">
-                    <div className="alvida anim a2">ALVIDA 2026</div>
-                    <Link className="btnPrimary anim a4" to="/memories">
-                      Continue
-                    </Link>
-                  </div>
+                <div className="inviteTextOnly">
+                  <div className="alvida anim a2">ALVIDA 2026</div>
+                  <Link className="btnPrimary anim a4" to="/memories">
+                    Continue
+                  </Link>
                 </div>
               </section>
             }
