@@ -235,8 +235,9 @@ export default function App() {
                       <div className="wmSmall">FAREWELL</div>
                     </div>
                   </div>
-                  <Link className="btnPrimary anim a4" to="/memories">
-                    Continue
+                  <Link className="btnContinue anim a4" to="/memories">
+                    <span className="btnContinueText">Continue</span>
+                    <span className="btnContinueArrow" aria-hidden="true" />
                   </Link>
                 </div>
               </section>
