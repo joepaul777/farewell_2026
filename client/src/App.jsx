@@ -1,5 +1,27 @@
 import { useEffect, useMemo, useState } from "react";
 
+function hashToId(hash) {
+  const raw = String(hash || "");
+  const cleaned = raw.startsWith("#") ? raw.slice(1) : raw;
+  return cleaned || "";
+}
+
+function scrollToId(id) {
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function seededNumber(seed) {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967296;
+}
+
 function clampYear(value) {
   if (typeof value !== "number") return null;
   if (Number.isNaN(value)) return null;
@@ -37,11 +59,15 @@ export default function App() {
   const [programs, setPrograms] = useState([]);
   const [loadingPrograms, setLoadingPrograms] = useState(true);
   const [programsError, setProgramsError] = useState("");
+  const [gallery, setGallery] = useState([]);
+  const [galleryError, setGalleryError] = useState("");
 
   const invite = useMemo(
     () => ({
-      title: "Farewell Invitation",
-      line1: "With lots of love and gratitude, we invite our amazing seniors to the Farewell 2026.",
+      titleTop: "ALVIDA 2026",
+      titleBottom: "Seniors Farewell",
+      line1:
+        "With lots of love and gratitude, we invite our amazing seniors to the Farewell 2026.",
       date: "Date: (add date)",
       time: "Time: (add time)",
       venue: "Venue: (add venue)",
@@ -77,6 +103,48 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        setGalleryError("");
+        const res = await fetch("/gallery.json");
+        if (!res.ok) throw new Error(`Failed to load gallery (${res.status})`);
+        const data = await res.json();
+        if (cancelled) return;
+        setGallery(Array.isArray(data.items) ? data.items : []);
+      } catch (e) {
+        if (cancelled) return;
+        setGalleryError(e instanceof Error ? e.message : "Failed to load gallery");
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const ensureInvite = () => {
+      const id = hashToId(window.location.hash);
+      if (!id) window.location.hash = "#invite";
+    };
+    ensureInvite();
+    window.addEventListener("hashchange", ensureInvite);
+    return () => window.removeEventListener("hashchange", ensureInvite);
+  }, []);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const id = hashToId(window.location.hash);
+      if (!id) return;
+      requestAnimationFrame(() => scrollToId(id));
+    };
+    onHashChange();
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   return (
     <div className="page">
       <header className="topbar">
@@ -89,31 +157,38 @@ export default function App() {
         </div>
 
         <nav className="nav">
-          <a className="navLink" href="#invitation">
+          <a className="navLink" href="#invite">
             Invitation
           </a>
-          <a className="navLink" href="#about">
-            About
-          </a>
-          <a className="navLink" href="#programs">
-            Programs
+          <a className="navLink" href="#memories">
+            Memories
           </a>
         </nav>
       </header>
 
       <main className="container">
-        <section id="invitation" className="inviteCover">
+        <section id="invite" className="inviteCover inviteBlur">
           <div className="inviteDecor" aria-hidden="true">
+            <div className="blurBlob b1" />
+            <div className="blurBlob b2" />
+            <div className="blurBlob b3" />
+            <div className="spark s1" />
+            <div className="spark s2" />
+            <div className="spark s3" />
+            <div className="spark s4" />
             <div className="waxSeal" />
             <div className="floatingDot dot1" />
             <div className="floatingDot dot2" />
             <div className="floatingDot dot3" />
           </div>
 
-          <div className="invitePaper">
+          <div className="invitePaper inviteFront">
             <div className="inviteTop">
-              <div className="kicker anim a1">You made our college life brighter.</div>
-              <h1 className="h1 anim a2">{invite.title}</h1>
+              <div className="kicker anim a1">A farewell from your juniors</div>
+              <div className="titleStack anim a2">
+                <div className="titleTop">{invite.titleTop}</div>
+                <div className="titleBottom">{invite.titleBottom}</div>
+              </div>
               <p className="lead anim a3">{invite.line1}</p>
             </div>
 
@@ -137,57 +212,67 @@ export default function App() {
             </div>
 
             <div className="inviteActions anim a5">
-              <a className="btnPrimary" href="#about">
-                About seniors
+              <a className="btnPrimary" href="#memories">
+                Continue
               </a>
               <a className="btnGhost" href="#programs">
-                View programs
+                Programs
               </a>
             </div>
-
-            <a className="scrollHint anim a6" href="#about" aria-label="Scroll to About section">
-              <span className="scrollHintText">Scroll</span>
-              <span className="scrollHintArrow" aria-hidden="true" />
-            </a>
           </div>
         </section>
 
-        <Section id="about" title="About our seniors">
-          <div className="twoCol">
-            <div className="prose">
-              <p>
-                This farewell is a celebration of the seniors who mentored us,
-                organized events, and made our department feel like a family.
-              </p>
-              <p>
-                Add your own message here—keep it short, warm, and personal. You
-                can include the batch name, department, and a thank-you note.
-              </p>
-              <p className="mutedSmall">
-                Edit this section in <code>client/src/App.jsx</code>.
-              </p>
-            </div>
-            <div className="stats">
-              <div className="stat">
-                <div className="statNum">∞</div>
-                <div className="statLabel">Memories</div>
-              </div>
-              <div className="stat">
-                <div className="statNum">❤️</div>
-                <div className="statLabel">Gratitude</div>
-              </div>
-              <div className="stat">
-                <div className="statNum">🎓</div>
-                <div className="statLabel">New journeys</div>
-              </div>
-            </div>
+        <Section id="memories" title="Gallery of memories">
+          <div className="mutedSmall">
+            Add your photos/videos inside <code>client/public/media</code> and list
+            them in <code>client/public/gallery.json</code>.
+          </div>
+
+          {galleryError ? <div className="error">{galleryError}</div> : null}
+
+          <div className="collage">
+            {gallery.map((item, idx) => {
+              const src = String(item?.src || "");
+              const type = String(item?.type || "image");
+              const alt = String(item?.alt || "Memory");
+              const poster = String(item?.poster || "");
+
+              const r1 = seededNumber(`${src}-a`);
+              const r2 = seededNumber(`${src}-b`);
+              const r3 = seededNumber(`${src}-c`);
+
+              const rot = (r1 * 10 - 5).toFixed(2);
+              const y = (r2 * 10 - 5).toFixed(2);
+              const x = (r3 * 10 - 5).toFixed(2);
+
+              const className = `tile t${(idx % 6) + 1}`;
+              const style = {
+                transform: `translate(${x}px, ${y}px) rotate(${rot}deg)`
+              };
+
+              return (
+                <div className={className} style={style} key={`${src}-${idx}`}>
+                  {type === "video" ? (
+                    <video
+                      className="media"
+                      src={src}
+                      poster={poster || undefined}
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img className="media" src={src} alt={alt} loading="lazy" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </Section>
 
         <Section id="programs" title="Programs hosted during college">
           <div className="mutedSmall">
-            This list is loaded from <code>client/public/programs.json</code>. You
-            can edit it anytime and redeploy.
+            This list is loaded from <code>client/public/programs.json</code>.
           </div>
 
           {loadingPrograms ? (

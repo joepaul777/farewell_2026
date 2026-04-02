@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "type": "image", "src": "/media/photo1.jpg", "alt": "Memory 1" },
+    { "type": "image", "src": "/media/photo2.jpg", "alt": "Memory 2" },
+    { "type": "video", "src": "/media/video1.mp4", "poster": "/media/video1-poster.jpg", "alt": "Memory video 1" }
+  ]
+}
+
