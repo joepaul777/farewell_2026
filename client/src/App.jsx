@@ -1,6 +1,84 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 
+const MEDIA_JPEGS = [
+  "/media/4.jpeg",
+  "/media/898.jpeg",
+  "/media/a.jpeg",
+  "/media/asdasd.jpeg",
+  "/media/cvbxcvbxcvbxcb.jpeg",
+  "/media/d.jpeg",
+  "/media/dfgdfg.jpeg",
+  "/media/ert.jpeg",
+  "/media/fdfsdfsdf.jpeg",
+  "/media/fgh.jpeg",
+  "/media/h.jpeg",
+  "/media/k.jpeg",
+  "/media/kiu.jpeg",
+  "/media/M.jpeg",
+  "/media/rfdf.jpeg",
+  "/media/sdf.jpeg",
+  "/media/uk.jpeg",
+  "/media/we.jpeg",
+  "/media/wef.jpeg",
+  "/media/WhatsA.jpeg",
+  "/media/WhatsApp%20.jpeg",
+  "/media/WhatsApp%20Image%202026-04%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206..jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.20%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.21%20.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.21%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.22%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.23%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.25%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.26%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.asdasd25%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.48M.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.49.52%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.50.14%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.21%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.23%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.25%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.26%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.31%20PM.jpeg",
+  "/media/WhatsApp%20Image%202026-04-0426%20PM.jpeg",
+  "/media/WhatsApp%20Image%2020265%20PM.jpeg",
+  "/media/WhatsApp%20Image%202at%206.51.23%20PM.jpeg",
+  "/media/xcvb.jpeg",
+  "/media/xcvbs.jpeg",
+  "/media/yk.jpeg"
+];
+
+function PhotoStripsBackground() {
+  const rows = 5;
+  const images = MEDIA_JPEGS.length ? MEDIA_JPEGS : ["/media/photo1.jpg"];
+
+  return (
+    <div className="photoStrips" aria-hidden="true">
+      {Array.from({ length: rows }).map((_, rowIdx) => {
+        const dir = rowIdx % 2 === 0 ? "ltr" : "rtl";
+        const speedClass = `spd${(rowIdx % 3) + 1}`;
+        const rowClass = `stripRow ${dir} ${speedClass}`;
+
+        // repeat images so the strip loops seamlessly
+        const repeated = [...images, ...images];
+        return (
+          <div className={rowClass} key={`row-${rowIdx}`}>
+            <div className="stripTrack">
+              {repeated.map((src, i) => (
+                <div className="stripItem" key={`${rowIdx}-${i}-${src}`}>
+                  <img className="stripImg" src={src} alt="" loading="lazy" />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      <div className="stripTint" />
+    </div>
+  );
+}
+
 function seededNumber(seed) {
   let h = 2166136261;
   for (let i = 0; i < seed.length; i += 1) {
@@ -147,6 +225,7 @@ export default function App() {
             path="/"
             element={
               <section className="inviteCover inviteBlur">
+                <PhotoStripsBackground />
                 <div className="inviteDecor" aria-hidden="true">
                   <div className="blurBlob b1" />
                   <div className="blurBlob b2" />
