@@ -102,83 +102,55 @@ export default function App() {
       </header>
 
       <main className="container">
-        <div className="hero">
-          <div className="heroLeft">
-            <div className="kicker">You made our college life brighter.</div>
-            <h1 className="h1">Join us for a heartfelt farewell.</h1>
-            <p className="lead">
-              A small website to invite you, celebrate your journey, and remember
-              the programs you led and hosted.
-            </p>
-            <div className="heroCtas">
-              <a className="btnPrimary" href="#invitation">
-                View invitation
+        <section id="invitation" className="inviteCover">
+          <div className="inviteDecor" aria-hidden="true">
+            <div className="waxSeal" />
+            <div className="floatingDot dot1" />
+            <div className="floatingDot dot2" />
+            <div className="floatingDot dot3" />
+          </div>
+
+          <div className="invitePaper">
+            <div className="inviteTop">
+              <div className="kicker anim a1">You made our college life brighter.</div>
+              <h1 className="h1 anim a2">{invite.title}</h1>
+              <p className="lead anim a3">{invite.line1}</p>
+            </div>
+
+            <div className="inviteMetaGrid anim a4">
+              <div className="metaRow">
+                <div className="metaLabel">Date</div>
+                <div className="metaValue">{invite.date}</div>
+              </div>
+              <div className="metaRow">
+                <div className="metaLabel">Time</div>
+                <div className="metaValue">{invite.time}</div>
+              </div>
+              <div className="metaRow">
+                <div className="metaLabel">Venue</div>
+                <div className="metaValue">{invite.venue}</div>
+              </div>
+              <div className="metaRow">
+                <div className="metaLabel">Note</div>
+                <div className="metaValue">{invite.note}</div>
+              </div>
+            </div>
+
+            <div className="inviteActions anim a5">
+              <a className="btnPrimary" href="#about">
+                About seniors
               </a>
               <a className="btnGhost" href="#programs">
-                See programs
+                View programs
               </a>
             </div>
-          </div>
-          <div className="heroRight">
-            <div className="heroCard">
-              <div className="heroCardTitle">Quick details</div>
-              <div className="heroCardRow">
-                <div className="muted">Date</div>
-                <div>{invite.date.replace("Date: ", "")}</div>
-              </div>
-              <div className="heroCardRow">
-                <div className="muted">Time</div>
-                <div>{invite.time.replace("Time: ", "")}</div>
-              </div>
-              <div className="heroCardRow">
-                <div className="muted">Venue</div>
-                <div>{invite.venue.replace("Venue: ", "")}</div>
-              </div>
-              <div className="heroCardDivider" />
-              <div className="mutedSmall">
-                Tip: edit the placeholder details in <code>client/src/App.jsx</code>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <Section id="invitation" title="Invitation">
-          <div className="inviteGrid">
-            <div className="inviteCard">
-              <div className="inviteTitle">{invite.title}</div>
-              <p className="inviteText">{invite.line1}</p>
-              <div className="inviteMeta">
-                <div className="metaRow">
-                  <div className="metaLabel">Date</div>
-                  <div className="metaValue">{invite.date}</div>
-                </div>
-                <div className="metaRow">
-                  <div className="metaLabel">Time</div>
-                  <div className="metaValue">{invite.time}</div>
-                </div>
-                <div className="metaRow">
-                  <div className="metaLabel">Venue</div>
-                  <div className="metaValue">{invite.venue}</div>
-                </div>
-                <div className="metaRow">
-                  <div className="metaLabel">Note</div>
-                  <div className="metaValue">{invite.note}</div>
-                </div>
-              </div>
-            </div>
-            <div className="quoteCard">
-              <div className="quote">
-                “Thank you for leading us, guiding us, and making every event feel
-                special.”
-              </div>
-              <div className="quoteBy">— Your juniors</div>
-              <div className="divider" />
-              <div className="mutedSmall">
-                Want RSVP? Tell me and I’ll add a simple RSVP form (no database).
-              </div>
-            </div>
+            <a className="scrollHint anim a6" href="#about" aria-label="Scroll to About section">
+              <span className="scrollHintText">Scroll</span>
+              <span className="scrollHintArrow" aria-hidden="true" />
+            </a>
           </div>
-        </Section>
+        </section>
 
         <Section id="about" title="About our seniors">
           <div className="twoCol">
