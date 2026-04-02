@@ -1,17 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-
-function hashToId(hash) {
-  const raw = String(hash || "");
-  const cleaned = raw.startsWith("#") ? raw.slice(1) : raw;
-  return cleaned || "";
-}
-
-function scrollToId(id) {
-  if (!id) return;
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 function seededNumber(seed) {
   let h = 2166136261;
@@ -61,6 +49,7 @@ export default function App() {
   const [programsError, setProgramsError] = useState("");
   const [gallery, setGallery] = useState([]);
   const [galleryError, setGalleryError] = useState("");
+  const location = useLocation();
 
   const invite = useMemo(
     () => ({
@@ -125,25 +114,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const ensureInvite = () => {
-      const id = hashToId(window.location.hash);
-      if (!id) window.location.hash = "#invite";
-    };
-    ensureInvite();
-    window.addEventListener("hashchange", ensureInvite);
-    return () => window.removeEventListener("hashchange", ensureInvite);
-  }, []);
-
-  useEffect(() => {
-    const onHashChange = () => {
-      const id = hashToId(window.location.hash);
-      if (!id) return;
-      requestAnimationFrame(() => scrollToId(id));
-    };
-    onHashChange();
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
 
   return (
     <div className="page">
@@ -157,140 +129,175 @@ export default function App() {
         </div>
 
         <nav className="nav">
-          <a className="navLink" href="#invite">
+          <Link className="navLink" to="/">
             Invitation
-          </a>
-          <a className="navLink" href="#memories">
+          </Link>
+          <Link className="navLink" to="/memories">
             Memories
-          </a>
+          </Link>
+          <Link className="navLink" to="/programs">
+            Programs
+          </Link>
         </nav>
       </header>
 
       <main className="container">
-        <section id="invite" className="inviteCover inviteBlur">
-          <div className="inviteDecor" aria-hidden="true">
-            <div className="blurBlob b1" />
-            <div className="blurBlob b2" />
-            <div className="blurBlob b3" />
-            <div className="spark s1" />
-            <div className="spark s2" />
-            <div className="spark s3" />
-            <div className="spark s4" />
-            <div className="waxSeal" />
-            <div className="floatingDot dot1" />
-            <div className="floatingDot dot2" />
-            <div className="floatingDot dot3" />
-          </div>
-
-          <div className="invitePaper inviteFront">
-            <div className="inviteTop">
-              <div className="kicker anim a1">A farewell from your juniors</div>
-              <div className="titleStack anim a2">
-                <div className="titleTop">{invite.titleTop}</div>
-                <div className="titleBottom">{invite.titleBottom}</div>
-              </div>
-              <p className="lead anim a3">{invite.line1}</p>
-            </div>
-
-            <div className="inviteMetaGrid anim a4">
-              <div className="metaRow">
-                <div className="metaLabel">Date</div>
-                <div className="metaValue">{invite.date}</div>
-              </div>
-              <div className="metaRow">
-                <div className="metaLabel">Time</div>
-                <div className="metaValue">{invite.time}</div>
-              </div>
-              <div className="metaRow">
-                <div className="metaLabel">Venue</div>
-                <div className="metaValue">{invite.venue}</div>
-              </div>
-              <div className="metaRow">
-                <div className="metaLabel">Note</div>
-                <div className="metaValue">{invite.note}</div>
-              </div>
-            </div>
-
-            <div className="inviteActions anim a5">
-              <a className="btnPrimary" href="#memories">
-                Continue
-              </a>
-              <a className="btnGhost" href="#programs">
-                Programs
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <Section id="memories" title="Gallery of memories">
-          <div className="mutedSmall">
-            Add your photos/videos inside <code>client/public/media</code> and list
-            them in <code>client/public/gallery.json</code>.
-          </div>
-
-          {galleryError ? <div className="error">{galleryError}</div> : null}
-
-          <div className="collage">
-            {gallery.map((item, idx) => {
-              const src = String(item?.src || "");
-              const type = String(item?.type || "image");
-              const alt = String(item?.alt || "Memory");
-              const poster = String(item?.poster || "");
-
-              const r1 = seededNumber(`${src}-a`);
-              const r2 = seededNumber(`${src}-b`);
-              const r3 = seededNumber(`${src}-c`);
-
-              const rot = (r1 * 10 - 5).toFixed(2);
-              const y = (r2 * 10 - 5).toFixed(2);
-              const x = (r3 * 10 - 5).toFixed(2);
-
-              const className = `tile t${(idx % 6) + 1}`;
-              const style = {
-                transform: `translate(${x}px, ${y}px) rotate(${rot}deg)`
-              };
-
-              return (
-                <div className={className} style={style} key={`${src}-${idx}`}>
-                  {type === "video" ? (
-                    <video
-                      className="media"
-                      src={src}
-                      poster={poster || undefined}
-                      controls
-                      playsInline
-                      preload="metadata"
-                    />
-                  ) : (
-                    <img className="media" src={src} alt={alt} loading="lazy" />
-                  )}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <section className="inviteCover inviteBlur">
+                <div className="inviteDecor" aria-hidden="true">
+                  <div className="blurBlob b1" />
+                  <div className="blurBlob b2" />
+                  <div className="blurBlob b3" />
+                  <div className="spark s1" />
+                  <div className="spark s2" />
+                  <div className="spark s3" />
+                  <div className="spark s4" />
+                  <div className="waxSeal" />
+                  <div className="floatingDot dot1" />
+                  <div className="floatingDot dot2" />
+                  <div className="floatingDot dot3" />
                 </div>
-              );
-            })}
-          </div>
-        </Section>
 
-        <Section id="programs" title="Programs hosted during college">
-          <div className="mutedSmall">
-            This list is loaded from <code>client/public/programs.json</code>.
-          </div>
+                <div className="invitePaper inviteFront">
+                  <div className="inviteTop">
+                    <div className="kicker anim a1">A farewell from your juniors</div>
+                    <div className="titleStack anim a2">
+                      <div className="titleTop">{invite.titleTop}</div>
+                      <div className="titleBottom">{invite.titleBottom}</div>
+                    </div>
+                    <p className="lead anim a3">{invite.line1}</p>
+                  </div>
 
-          {loadingPrograms ? (
-            <div className="loading">Loading programs…</div>
-          ) : programsError ? (
-            <div className="error">{programsError}</div>
-          ) : programs.length === 0 ? (
-            <div className="empty">
-              No programs yet. Add them in <code>client/public/programs.json</code>.
-            </div>
-          ) : (
-            <div className="grid">
-              {programs.map((p) => (
-                <ProgramCard key={`${p.title}-${p.year ?? ""}`} program={p} />
-              ))}
-            </div>
-          )}
-        </Section>
+                  <div className="inviteMetaGrid anim a4">
+                    <div className="metaRow">
+                      <div className="metaLabel">Date</div>
+                      <div className="metaValue">{invite.date}</div>
+                    </div>
+                    <div className="metaRow">
+                      <div className="metaLabel">Time</div>
+                      <div className="metaValue">{invite.time}</div>
+                    </div>
+                    <div className="metaRow">
+                      <div className="metaLabel">Venue</div>
+                      <div className="metaValue">{invite.venue}</div>
+                    </div>
+                    <div className="metaRow">
+                      <div className="metaLabel">Note</div>
+                      <div className="metaValue">{invite.note}</div>
+                    </div>
+                  </div>
+
+                  <div className="inviteActions anim a5">
+                    <Link className="btnPrimary" to="/memories">
+                      Continue
+                    </Link>
+                    <Link className="btnGhost" to="/programs">
+                      Programs
+                    </Link>
+                  </div>
+                </div>
+              </section>
+            }
+          />
+
+          <Route
+            path="/memories"
+            element={
+              <Section id="memories" title="Gallery of memories">
+                <div className="mutedSmall">
+                  Add your photos/videos inside <code>client/public/media</code> and
+                  list them in <code>client/public/gallery.json</code>.
+                </div>
+
+                {galleryError ? <div className="error">{galleryError}</div> : null}
+
+                <div className="collage">
+                  {gallery.map((item, idx) => {
+                    const src = String(item?.src || "");
+                    const type = String(item?.type || "image");
+                    const alt = String(item?.alt || "Memory");
+                    const poster = String(item?.poster || "");
+
+                    const r1 = seededNumber(`${src}-a`);
+                    const r2 = seededNumber(`${src}-b`);
+                    const r3 = seededNumber(`${src}-c`);
+
+                    const rot = (r1 * 10 - 5).toFixed(2);
+                    const y = (r2 * 10 - 5).toFixed(2);
+                    const x = (r3 * 10 - 5).toFixed(2);
+
+                    const className = `tile t${(idx % 6) + 1}`;
+                    const style = {
+                      transform: `translate(${x}px, ${y}px) rotate(${rot}deg)`
+                    };
+
+                    return (
+                      <div className={className} style={style} key={`${src}-${idx}`}>
+                        {type === "video" ? (
+                          <video
+                            className="media"
+                            src={src}
+                            poster={poster || undefined}
+                            controls
+                            playsInline
+                            preload="metadata"
+                          />
+                        ) : (
+                          <img className="media" src={src} alt={alt} loading="lazy" />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </Section>
+            }
+          />
+
+          <Route
+            path="/programs"
+            element={
+              <Section id="programs" title="Programs hosted during college">
+                <div className="mutedSmall">
+                  This list is loaded from <code>client/public/programs.json</code>.
+                </div>
+
+                {loadingPrograms ? (
+                  <div className="loading">Loading programs…</div>
+                ) : programsError ? (
+                  <div className="error">{programsError}</div>
+                ) : programs.length === 0 ? (
+                  <div className="empty">
+                    No programs yet. Add them in{" "}
+                    <code>client/public/programs.json</code>.
+                  </div>
+                ) : (
+                  <div className="grid">
+                    {programs.map((p) => (
+                      <ProgramCard key={`${p.title}-${p.year ?? ""}`} program={p} />
+                    ))}
+                  </div>
+                )}
+              </Section>
+            }
+          />
+
+          <Route
+            path="*"
+            element={
+              <Section id="not-found" title="Page not found">
+                <div className="mutedSmall">This page doesn’t exist.</div>
+                <div className="inviteActions">
+                  <Link className="btnPrimary" to="/">
+                    Go to invitation
+                  </Link>
+                </div>
+              </Section>
+            }
+          />
+        </Routes>
 
         <footer className="footer">
           <div className="mutedSmall">
