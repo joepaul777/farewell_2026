@@ -192,6 +192,19 @@ export default function App() {
     []
   );
 
+  const randomQuoteOverlays = useMemo(() => {
+    const overlayList = getQuoteDecor(0, gallery.length);
+    return overlayList.map((quote, idx) => ({
+      ...quote,
+      style: {
+        top: `${10 + (idx * 18) % 70}%`,
+        left: `${8 + (idx * 24) % 80}%`,
+        transform: `translate(-${Math.random() * 8}%, -${Math.random() * 8}%)`,
+        width: `${35 + (idx * 9) % 40}%`
+      }
+    }));
+  }, [gallery.length]);
+
   useEffect(() => {
     let cancelled = false;
     async function load() {
@@ -360,8 +373,12 @@ export default function App() {
                       </div>
                     );
                   })}
-                  {getQuoteDecor(0, gallery.length).map((quote) => (
-                    <div key={quote.key} className={`quoteDecor ${quote.color}`}>
+                  {randomQuoteOverlays.map((quote) => (
+                    <div
+                      key={quote.key}
+                      className={`quoteDecor ${quote.color}`}
+                      style={quote.style}
+                    >
                       {quote.text}
                     </div>
                   ))}
@@ -384,7 +401,7 @@ export default function App() {
                   <div className="invitationModal" onClick={() => setShowInvitation(false)}>
                     <div className="invitationContent" onClick={(e) => e.stopPropagation()}>
                       <button className="invitationClose" onClick={() => setShowInvitation(false)}>&times;</button>
-                      <img src="/media/invitation.PNG" alt="Invitation" className="invitationImg" />
+                      <img src="/media/invitation.png" alt="Invitation" className="invitationImg" />
                     </div>
                   </div>
                 )}
