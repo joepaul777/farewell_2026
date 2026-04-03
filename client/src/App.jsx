@@ -8,7 +8,7 @@ const MEDIA_JPEGS = mediaFiles.items
   .map((i) => i.src);
 
 function PhotoStripsBackground() {
-  const rows = 12;
+  const rows = 8;
   const images = MEDIA_JPEGS.length ? MEDIA_JPEGS : ["/media/photo1.jpg"];
 
   return (
@@ -19,7 +19,7 @@ function PhotoStripsBackground() {
         const rowClass = `stripRow ${dir} ${speedClass}`;
 
         const subset = [];
-        for (let k = 0; k < 40; k++) {
+        for (let k = 0; k < 15; k++) {
           subset.push(images[(rowIdx * 17 + k) % images.length]);
         }
 

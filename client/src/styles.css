@@ -153,9 +153,8 @@ a {
   transform: translate(-50%, -50%) rotate(-25deg);
   z-index: 0;
   display: grid;
-  grid-template-rows: repeat(12, 1fr);
-  filter: blur(4px) saturate(0.85) contrast(0.8);
-  opacity: 0.7;
+  grid-template-rows: repeat(8, 1fr);
+  opacity: 0.5;
 }
 
 .stripRow {
@@ -345,6 +344,7 @@ a {
   color: #5a1b2c;
   text-transform: uppercase;
   font-family: "Cinzel", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  text-shadow: 0 4px 12px rgba(90, 27, 44, 0.2);
 }
 
 .wmLeft {
