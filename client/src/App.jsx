@@ -85,22 +85,6 @@ function ProgramCard({ program }) {
 }
 
 
-function getQuoteDecor(idx, total) {
-  const quotes = [];
-  const interval = Math.max(2, Math.floor(total / 4));
-  for (let i = interval; i < total; i += interval) {
-    const quoteIdx = (i + idx) % DECORATOR_QUOTES.length;
-    const color = (i + idx) % 2 === 0 ? "burgundy" : "camel";
-    quotes.push({ text: DECORATOR_QUOTES[quoteIdx], color, key: `quote-${i}` });
-  }
-  // Ensure at least 2 quotes are shown
-  if (quotes.length === 0 && total > 0) {
-    quotes.push({ text: DECORATOR_QUOTES[0], color: "burgundy", key: "quote-0" });
-    quotes.push({ text: DECORATOR_QUOTES[1], color: "camel", key: "quote-1" });
-  }
-  return quotes;
-}
-
 const SLIDESHOW_ITEMS = [
   { src: "/media/group photos/IMG-20260402-WA0023.jpg", quote: "The moments that take our breath away..." },
   { src: "/media/group photos/IMG-20260402-WA0024.jpg", quote: "Friends that became family." },
@@ -179,19 +163,6 @@ export default function App() {
     }),
     []
   );
-
-  const randomQuoteOverlays = useMemo(() => {
-    const overlayList = getQuoteDecor(0, gallery.length);
-    return overlayList.map((quote, idx) => ({
-      ...quote,
-      style: {
-        top: `${10 + (idx * 18) % 70}%`,
-        left: `${8 + (idx * 24) % 80}%`,
-        transform: `translate(-${Math.random() * 8}%, -${Math.random() * 8}%)`,
-        width: `${35 + (idx * 9) % 40}%`
-      }
-    }));
-  }, [gallery.length]);
 
   useEffect(() => {
     let cancelled = false;
@@ -374,15 +345,6 @@ export default function App() {
                       </div>
                     );
                   })}
-                  {randomQuoteOverlays.map((quote) => (
-                    <div
-                      key={quote.key}
-                      className={`quoteDecor ${quote.color}`}
-                      style={quote.style}
-                    >
-                      {quote.text}
-                    </div>
-                  ))}
                 </div>
 
                 {selectedImage && (
