@@ -252,6 +252,7 @@ export default function App() {
                     <div className="wmRight">
                       <div className="wmSmall">SENIOR&apos;S</div>
                       <div className="wmSmall">FAREWELL</div>
+                      <div className="batchYear">BATCH 2022-2026</div>
                     </div>
                   </div>
                   <Link className="btnContinue anim a4" to="/memories">
