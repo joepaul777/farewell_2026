@@ -84,18 +84,6 @@ function ProgramCard({ program }) {
   );
 }
 
-const DECORATOR_QUOTES = [
-  "Every moment matters",
-  "Unforgettable bonds",
-  "Life is the chapters",
-  "Cherish the moments",
-  "Friends like family",
-  "Our story continues",
-  "Forever grateful",
-  "Joy & laughter",
-  "Timeless memories",
-  "Together always"
-];
 
 function getQuoteDecor(idx, total) {
   const quotes = [];
