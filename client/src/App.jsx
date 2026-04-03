@@ -249,10 +249,6 @@ export default function App() {
             path="/memories"
             element={
               <Section id="memories" title="Gallery of memories">
-                <div className="mutedSmall">
-                  Add your photos/videos inside <code>client/public/media</code> and
-                  list them in <code>client/public/gallery.json</code>.
-                </div>
 
                 {galleryError ? <div className="error">{galleryError}</div> : null}
 
@@ -277,9 +273,9 @@ export default function App() {
                     };
 
                     return (
-                      <div 
-                        className={className} 
-                        style={style} 
+                      <div
+                        className={className}
+                        style={style}
                         key={`${src}-${idx}`}
                         onClick={() => setSelectedImage(src)}
                       >
