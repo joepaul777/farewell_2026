@@ -1140,6 +1140,49 @@ a {
   animation: modalFadeIn 0.3s ease forwards;
 }
 
+.invitationContent {
+  animation: invitationPop 0.4s ease-out forwards;
+}
+
+@keyframes invitationPop {
+  from { transform: scale(0.86) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Confetti Mutation for clearer effect */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  width: 10px;
+  height: 10px;
+  background: var(--burgundy);
+  border-radius: 50%;
+  z-index: 9999;
+  animation: confettiFall var(--duration, 3s) ease-out forwards;
+  opacity: 0.9;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.confetti.camel {
+  background: var(--camel);
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(120vh) rotate(720deg) scale(0.4);
+    opacity: 0;
+  }
+}
+
+}
+
 @keyframes modalFadeIn {
   from {
     opacity: 0;

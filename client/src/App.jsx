@@ -259,17 +259,30 @@ export default function App() {
 
   useEffect(() => {
     if (showInvitation) {
-      const count = 50;
+      const count = 80;
+      const confettiItems = [];
       for (let i = 0; i < count; i++) {
         const confetti = document.createElement("div");
         confetti.className = `confetti ${Math.random() > 0.5 ? "camel" : ""}`;
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.setProperty("--tx", (Math.random() - 0.5) * 400 + "px");
-        confetti.style.setProperty("--duration", (Math.random() * 2 + 2.5) + "s");
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `${Math.random() * 15 - 8}%`;
+        const width = Math.random() * 10 + 8;
+        confetti.style.width = `${width}px`;
+        confetti.style.height = `${width}px`;
+        const duration = (Math.random() * 1.6 + 2.2).toFixed(2);
+        confetti.style.setProperty("--duration", `${duration}s`);
+        confetti.style.setProperty("--tx", `${(Math.random() - 0.5) * 300}px`);
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confettiItems.push(confetti);
         document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 5000);
       }
+      const cleanup = setTimeout(() => {
+        confettiItems.forEach((item) => item.remove());
+      }, 6000);
+
+      return () => clearTimeout(cleanup);
     }
+    return undefined;
   }, [showInvitation]);
 
   useEffect(() => {
