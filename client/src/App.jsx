@@ -127,6 +127,7 @@ export default function App() {
   const [programsError, setProgramsError] = useState("");
   const [gallery, setGallery] = useState([]);
   const [galleryError, setGalleryError] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
   const location = useLocation();
 
   const invite = useMemo(
@@ -276,7 +277,12 @@ export default function App() {
                     };
 
                     return (
-                      <div className={className} style={style} key={`${src}-${idx}`}>
+                      <div 
+                        className={className} 
+                        style={style} 
+                        key={`${src}-${idx}`}
+                        onClick={() => setSelectedImage(src)}
+                      >
                         {type === "video" ? (
                           <video
                             className="media"
@@ -293,6 +299,19 @@ export default function App() {
                     );
                   })}
                 </div>
+
+                {selectedImage && (
+                  <div className="lightboxOverlay" onClick={() => setSelectedImage(null)}>
+                    <div className="lightboxContent" onClick={(e) => e.stopPropagation()}>
+                      <button className="lightboxClose" onClick={() => setSelectedImage(null)}>&times;</button>
+                      {selectedImage.endsWith('.mp4') ? (
+                        <video src={selectedImage} className="lightboxMedia" controls autoPlay playsInline />
+                      ) : (
+                        <img src={selectedImage} className="lightboxMedia" alt="Expanded memory" />
+                      )}
+                    </div>
+                  </div>
+                )}
               </Section>
             }
           />

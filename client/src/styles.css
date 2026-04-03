@@ -971,6 +971,14 @@ a {
   overflow: hidden;
   transform-origin: center;
   animation: tileIn 700ms cubic-bezier(0.2, 0.85, 0.2, 1) both;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, z-index 0s;
+}
+
+.tile:hover {
+  transform: scale(1.05) translateY(-5px) !important;
+  box-shadow: 0 16px 32px rgba(122, 21, 52, 0.2);
+  z-index: 10;
 }
 
 .tile:nth-child(1) {
@@ -1001,6 +1009,71 @@ a {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Lightbox styles */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: lightboxFadeIn 0.3s forwards;
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  transform: scale(0.9);
+  animation: lightboxPopIn 0.3s cubic-bezier(0.2, 0.85, 0.2, 1) forwards;
+}
+
+.lightboxMedia {
+  width: 100%;
+  height: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.lightboxClose {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  padding: 8px;
+  line-height: 1;
+}
+
+.lightboxClose:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .lightboxClose {
+    top: -50px;
+    right: 0px;
+  }
+}
+
+@keyframes lightboxFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes lightboxPopIn {
+  to { transform: scale(1); }
 }
 
 .media {
