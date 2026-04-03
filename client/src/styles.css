@@ -137,6 +137,16 @@ a {
   padding: 0;
 }
 
+.inviteCover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .inviteNoChrome {
   border-radius: 0;
   overflow: hidden;
