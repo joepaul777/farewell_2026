@@ -868,7 +868,10 @@ a {
 #memories .sectionHeader {
   justify-content: center;
   text-align: center;
-  color: var(--burgundy2);
+}
+
+#memories .h2 {
+  color: var(--ink);
 }
 
 .h2 {
@@ -1074,12 +1077,14 @@ a {
   display: flex;
   justify-content: center;
   margin-bottom: 16px;
+  position: relative;
+  z-index: 10;
 }
 
 .invitationBtn {
   padding: 12px 32px;
   border: 2px solid var(--burgundy);
-  background: rgba(122, 21, 52, 0.1);
+  background: rgba(122, 21, 52, 0.15);
   color: var(--burgundy);
   border-radius: 999px;
   font-size: 14px;
@@ -1089,6 +1094,8 @@ a {
   letter-spacing: 1px;
   transition: all 0.3s ease;
   font-family: inherit;
+  position: relative;
+  z-index: 10;
 }
 
 .invitationBtn:hover {
@@ -1270,11 +1277,11 @@ a {
 }
 
 .quoteDecor.burgundy {
-  color: var(--burgundy);
+  color: var(--burgundy) !important;
 }
 
 .quoteDecor.camel {
-  color: var(--camel);
+  color: var(--camel) !important;
 }
 
 @keyframes tileIn {
