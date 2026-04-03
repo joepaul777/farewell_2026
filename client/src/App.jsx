@@ -99,15 +99,21 @@ const DECORATOR_QUOTES = [
 
 function getQuoteDecor(idx, total) {
   const quotes = [];
-  const interval = Math.max(3, Math.floor(total / 5));
+  const interval = Math.max(2, Math.floor(total / 4));
   for (let i = interval; i < total; i += interval) {
     const quoteIdx = (i + idx) % DECORATOR_QUOTES.length;
     const color = (i + idx) % 2 === 0 ? "burgundy" : "camel";
     quotes.push({ text: DECORATOR_QUOTES[quoteIdx], color, key: `quote-${i}` });
   }
+  // Ensure at least 2 quotes are shown
+  if (quotes.length === 0 && total > 0) {
+    quotes.push({ text: DECORATOR_QUOTES[0], color: "burgundy", key: "quote-0" });
+    quotes.push({ text: DECORATOR_QUOTES[1], color: "camel", key: "quote-1" });
+  }
   return quotes;
 }
 
+const SLIDESHOW_ITEMS = [
   { src: "/media/group photos/IMG-20260402-WA0023.jpg", quote: "The moments that take our breath away..." },
   { src: "/media/group photos/IMG-20260402-WA0024.jpg", quote: "Friends that became family." },
   { src: "/media/group photos/IMG-20260402-WA0025.jpg", quote: "We didn't realize we were making memories, we just knew we were having fun." },

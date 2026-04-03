@@ -1076,18 +1076,19 @@ a {
 .invitationBtnContainer {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 10;
+  padding: 16px;
 }
 
 .invitationBtn {
-  padding: 12px 32px;
-  border: 2px solid var(--burgundy);
-  background: rgba(122, 21, 52, 0.15);
-  color: var(--burgundy);
+  padding: 14px 36px;
+  border: 3px solid var(--burgundy);
+  background: rgba(122, 21, 52, 0.35);
+  color: white;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
@@ -1096,12 +1097,14 @@ a {
   font-family: inherit;
   position: relative;
   z-index: 10;
+  box-shadow: 0 6px 16px rgba(122, 21, 52, 0.3);
 }
 
 .invitationBtn:hover {
   background: var(--burgundy);
   color: white;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(122, 21, 52, 0.4);
 }
 
 .invitationModal {
@@ -1262,18 +1265,22 @@ a {
   font-size: clamp(13px, 2.5vw, 18px);
   font-weight: 500;
   font-style: italic;
-  opacity: 0.65;
+  opacity: 0.9;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   line-height: 1.5;
   text-align: center;
   white-space: normal;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 16px;
   min-height: 80px;
   grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  margin: 12px 0;
+  border: 1px solid rgba(43, 27, 20, 0.1);
 }
 
 .quoteDecor.burgundy {
