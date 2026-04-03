@@ -371,7 +371,8 @@ export default function App() {
               </Section>
 
               <button className="invitationBtn" onClick={() => setShowInvitation(true)}>
-                📬
+                <span className="invitationEmoji">📬</span>
+                <span className="invitationText">Invitation</span>
               </button>
               </>
             }
