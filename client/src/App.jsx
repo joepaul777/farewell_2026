@@ -126,9 +126,6 @@ function SlideshowView({ onComplete }) {
             className={`slideshowSlide ${idx === currentIndex ? "active" : ""}`}
           >
             <img src={item.src} alt="" className="slideshowImg" />
-            <div className="slideshowQuoteOverlay">
-              <p className="slideshowQuoteText">{item.quote}</p>
-            </div>
           </div>
         ))}
       </div>
@@ -271,7 +268,7 @@ export default function App() {
             element={
               <>
                 {showSlideshow && <SlideshowView onComplete={() => setShowSlideshow(false)} />}
-                <Section id="memories" title="Gallery of memories">
+                <Section id="memories" title="GALLERY OF MEMORIES">
 
                 {galleryError ? <div className="error">{galleryError}</div> : null}
 
