@@ -146,7 +146,11 @@ a {
 
 .photoStrips {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  width: 200vw;
+  height: 130vh;
+  transform: translate(-50%, -50%) rotate(-25deg);
   z-index: 0;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
