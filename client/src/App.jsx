@@ -1,53 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 
-const MEDIA_JPEGS = [
-  "/media/4.jpeg",
-  "/media/898.jpeg",
-  "/media/a.jpeg",
-  "/media/asdasd.jpeg",
-  "/media/cvbxcvbxcvbxcb.jpeg",
-  "/media/d.jpeg",
-  "/media/dfgdfg.jpeg",
-  "/media/ert.jpeg",
-  "/media/fdfsdfsdf.jpeg",
-  "/media/fgh.jpeg",
-  "/media/h.jpeg",
-  "/media/k.jpeg",
-  "/media/kiu.jpeg",
-  "/media/M.jpeg",
-  "/media/rfdf.jpeg",
-  "/media/sdf.jpeg",
-  "/media/uk.jpeg",
-  "/media/we.jpeg",
-  "/media/wef.jpeg",
-  "/media/WhatsA.jpeg",
-  "/media/WhatsApp%20.jpeg",
-  "/media/WhatsApp%20Image%202026-04%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206..jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.20%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.21%20.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.21%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.22%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.23%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.25%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.26%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48.asdasd25%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.48M.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.49.52%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.50.14%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.21%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.23%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.25%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.26%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-02%20at%206.51.31%20PM.jpeg",
-  "/media/WhatsApp%20Image%202026-04-0426%20PM.jpeg",
-  "/media/WhatsApp%20Image%2020265%20PM.jpeg",
-  "/media/WhatsApp%20Image%202at%206.51.23%20PM.jpeg",
-  "/media/xcvb.jpeg",
-  "/media/xcvbs.jpeg",
-  "/media/yk.jpeg"
-];
+import mediaFiles from "./mediaFiles.json";
+
+const MEDIA_JPEGS = mediaFiles.items
+  .filter((i) => i.type === "image")
+  .map((i) => i.src);
 
 function PhotoStripsBackground() {
   const rows = 5;
@@ -117,6 +75,49 @@ function ProgramCard({ program }) {
       {program.description ? (
         <div className="cardDesc">{program.description}</div>
       ) : null}
+    </div>
+  );
+}
+
+const SLIDESHOW_ITEMS = [
+  { src: "/media/IMG-20260403-WA0192.jpg", quote: "The moments that take our breath away..." },
+  { src: "/media/IMG-20260403-WA0207.jpg", quote: "Friends that became family." },
+  { src: "/media/IMG-20260403-WA0236.jpg", quote: "We didn't realize we were making memories, we just knew we were having fun." },
+  { src: "/media/IMG-20260403-WA0316.jpg", quote: "Some paths are meant to be crossed." },
+  { src: "/media/IMG-20260403-WA0370.jpg", quote: "A journey of a thousand miles begins with a single step." },
+  { src: "/media/IMG-20260403-WA0268.jpg", quote: "To the nights we felt alive." }
+];
+
+function SlideshowView() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_ITEMS.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="slideshowContainer">
+      <div className="slideshowCard">
+        {SLIDESHOW_ITEMS.map((item, idx) => (
+          <div
+            key={item.src}
+            className={`slideshowSlide ${idx === currentIndex ? "active" : ""}`}
+          >
+            <img src={item.src} alt="" className="slideshowImg" />
+            <div className="slideshowQuoteOverlay">
+              <p className="slideshowQuoteText">{item.quote}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="inviteActions">
+        <Link to="/memories" className="btnPrimary">
+          Continue to Gallery
+        </Link>
+      </div>
     </div>
   );
 }
@@ -236,12 +237,21 @@ export default function App() {
                       <div className="wmSmall">FAREWELL</div>
                     </div>
                   </div>
-                  <Link className="btnContinue anim a4" to="/memories">
+                  <Link className="btnContinue anim a4" to="/slideshow">
                     <span className="btnContinueText">Continue</span>
                     <span className="btnContinueArrow" aria-hidden="true" />
                   </Link>
                 </div>
               </section>
+            }
+          />
+
+          <Route
+            path="/slideshow"
+            element={
+              <Section id="slideshow" title="A glimpse back...">
+                <SlideshowView />
+              </Section>
             }
           />
 

@@ -153,7 +153,7 @@ a {
   transform: translate(-50%, -50%) rotate(-25deg);
   z-index: 0;
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   filter: blur(4px) saturate(0.85) contrast(0.8);
   opacity: 0.7;
 }
@@ -959,6 +959,7 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
+  grid-auto-flow: dense;
 }
 
 @media (min-width: 720px) {
@@ -1204,5 +1205,65 @@ a {
   .section {
     padding: 16px;
   }
+}
+
+.slideshowContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+.slideshowCard {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 32px rgba(43, 27, 20, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+}
+
+.slideshowSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideshowSlide.active {
+  opacity: 1;
+}
+
+.slideshowImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slideshowQuoteOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 20px 20px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: #fff;
+  text-align: center;
+}
+
+.slideshowQuoteText {
+  font-family: "Cinzel", ui-serif, Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
 }
 
