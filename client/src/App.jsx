@@ -84,7 +84,30 @@ function ProgramCard({ program }) {
   );
 }
 
-const SLIDESHOW_ITEMS = [
+const DECORATOR_QUOTES = [
+  "Every moment matters",
+  "Unforgettable bonds",
+  "Life is the chapters",
+  "Cherish the moments",
+  "Friends like family",
+  "Our story continues",
+  "Forever grateful",
+  "Joy & laughter",
+  "Timeless memories",
+  "Together always"
+];
+
+function getQuoteDecor(idx, total) {
+  const quotes = [];
+  const interval = Math.max(3, Math.floor(total / 5));
+  for (let i = interval; i < total; i += interval) {
+    const quoteIdx = (i + idx) % DECORATOR_QUOTES.length;
+    const color = (i + idx) % 2 === 0 ? "burgundy" : "camel";
+    quotes.push({ text: DECORATOR_QUOTES[quoteIdx], color, key: `quote-${i}` });
+  }
+  return quotes;
+}
+
   { src: "/media/group photos/IMG-20260402-WA0023.jpg", quote: "The moments that take our breath away..." },
   { src: "/media/group photos/IMG-20260402-WA0024.jpg", quote: "Friends that became family." },
   { src: "/media/group photos/IMG-20260402-WA0025.jpg", quote: "We didn't realize we were making memories, we just knew we were having fun." },
@@ -146,6 +169,7 @@ export default function App() {
   const [gallery, setGallery] = useState([]);
   const [galleryError, setGalleryError] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showInvitation, setShowInvitation] = useState(false);
   const location = useLocation();
 
   const invite = useMemo(
@@ -215,6 +239,21 @@ export default function App() {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (showInvitation) {
+      const count = 50;
+      for (let i = 0; i < count; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = `confetti ${Math.random() > 0.5 ? "camel" : ""}`;
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.setProperty("--tx", (Math.random() - 0.5) * 400 + "px");
+        confetti.style.setProperty("--duration", (Math.random() * 2 + 2.5) + "s");
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+  }, [showInvitation]);
+
+  useEffect(() => {
     const isInvite = location.pathname === "/";
     const prevOverflow = document.body.style.overflow;
     const prevHeight = document.body.style.height;
@@ -273,6 +312,12 @@ export default function App() {
 
                 {galleryError ? <div className="error">{galleryError}</div> : null}
 
+                <div className="invitationBtnContainer">
+                  <button className="invitationBtn" onClick={() => setShowInvitation(true)}>
+                    { "📬 View Invitation" }
+                  </button>
+                </div>
+
                 <div className="collage">
                   {gallery.map((item, idx) => {
                     const src = String(item?.src || "");
@@ -315,6 +360,11 @@ export default function App() {
                       </div>
                     );
                   })}
+                  {getQuoteDecor(0, gallery.length).map((quote) => (
+                    <div key={quote.key} className={`quoteDecor ${quote.color}`}>
+                      {quote.text}
+                    </div>
+                  ))}
                 </div>
 
                 {selectedImage && (
@@ -326,6 +376,15 @@ export default function App() {
                       ) : (
                         <img src={selectedImage} className="lightboxMedia" alt="Expanded memory" />
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {showInvitation && (
+                  <div className="invitationModal" onClick={() => setShowInvitation(false)}>
+                    <div className="invitationContent" onClick={(e) => e.stopPropagation()}>
+                      <button className="invitationClose" onClick={() => setShowInvitation(false)}>&times;</button>
+                      <img src="/media/invitation.PNG" alt="Invitation" className="invitationImg" />
                     </div>
                   </div>
                 )}

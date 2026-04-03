@@ -408,6 +408,9 @@ a {
   margin-top: 8px;
   text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(90, 27, 44, 0.12);
+  grid-column: 1 / -1;
+  justify-self: center;
+  text-align: center;
 }
 
 @media (max-width: 420px) {
@@ -1066,10 +1069,133 @@ a {
   50% { transform: scale(1.2); opacity: 0.8; }
 }
 
+/* Invitation Modal */
+.invitationBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.invitationBtn {
+  padding: 12px 32px;
+  border: 2px solid var(--burgundy);
+  background: rgba(122, 21, 52, 0.1);
+  color: var(--burgundy);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.invitationBtn:hover {
+  background: var(--burgundy);
+  color: white;
+  transform: scale(1.05);
+}
+
+.invitationModal {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+  animation: modalFadeIn 0.3s ease forwards;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.invitationContent {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+}
+
+.invitationImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.invitationClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: rgba(122, 21, 52, 0.9);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.invitationClose:hover {
+  background: var(--burgundy);
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Confetti Animation */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  width: 10px;
+  height: 10px;
+  background: var(--burgundy);
+  border-radius: 50%;
+  z-index: 9999;
+  animation: confettiFall var(--duration, 3s) ease-out forwards;
+}
+
+.confetti.camel {
+  background: var(--camel);
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translate(0, -10vh) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 0px), 100vh) rotate(720deg) scale(0);
+    opacity: 0;
+  }
+}
+
 @media (min-width: 720px) {
   .collage {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+  }
+  
+  .invitationContent {
+    max-width: 600px;
+    max-height: 80vh;
   }
 }
 
@@ -1121,6 +1247,34 @@ a {
 }
 .tile:nth-child(6) {
   animation-delay: 360ms;
+}
+
+.quoteDecor {
+  position: relative;
+  font-family: "Garamond", "EB Garamond", Georgia, serif;
+  font-size: clamp(13px, 2.5vw, 18px);
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1.5;
+  text-align: center;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  min-height: 80px;
+  grid-column: 1 / -1;
+}
+
+.quoteDecor.burgundy {
+  color: var(--burgundy);
+}
+
+.quoteDecor.camel {
+  color: var(--camel);
 }
 
 @keyframes tileIn {
