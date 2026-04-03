@@ -282,9 +282,23 @@ export default function App() {
                     const alt = String(item?.alt || "Memory");
                     const poster = String(item?.poster || "");
 
+                    const r1 = seededNumber(`${src}-a`);
+                    const r2 = seededNumber(`${src}-b`);
+                    const r3 = seededNumber(`${src}-c`);
+
+                    const rot = (r1 * 10 - 5).toFixed(2);
+                    const y = (r2 * 10 - 5).toFixed(2);
+                    const x = (r3 * 10 - 5).toFixed(2);
+
+                    const className = `tile t${(idx % 6) + 1}`;
+                    const style = {
+                      transform: `translate(${x}px, ${y}px) rotate(${rot}deg)`
+                    };
+
                     return (
                       <div
-                        className={`tile t${(idx % 6) + 1}`}
+                        className={className}
+                        style={style}
                         key={`${src}-${idx}`}
                         onClick={() => setSelectedImage(src)}
                       >
