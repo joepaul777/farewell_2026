@@ -1073,38 +1073,57 @@ a {
 }
 
 /* Invitation Modal */
-.invitationBtnContainer {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 10;
-  padding: 16px;
-}
-
 .invitationBtn {
-  padding: 14px 36px;
-  border: 3px solid var(--burgundy);
-  background: rgba(122, 21, 52, 0.35);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  background: linear-gradient(135deg, var(--burgundy), var(--burgundy2));
   color: white;
-  border-radius: 999px;
-  font-size: 16px;
+  border-radius: 50%;
+  font-size: 24px;
   font-weight: 700;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   transition: all 0.3s ease;
-  font-family: inherit;
-  position: relative;
-  z-index: 10;
-  box-shadow: 0 6px 16px rgba(122, 21, 52, 0.3);
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(122, 21, 52, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: invitationGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes invitationGlow {
+  from {
+    box-shadow: 0 8px 24px rgba(122, 21, 52, 0.4);
+  }
+  to {
+    box-shadow: 0 8px 24px rgba(122, 21, 52, 0.4), 0 0 20px rgba(122, 21, 52, 0.3);
+  }
 }
 
 .invitationBtn:hover {
-  background: var(--burgundy);
-  color: white;
-  transform: scale(1.08);
-  box-shadow: 0 8px 20px rgba(122, 21, 52, 0.4);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 32px rgba(122, 21, 52, 0.6);
+  background: linear-gradient(135deg, var(--burgundy2), var(--burgundy));
+}
+
+.invitationBtn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 720px) {
+  .invitationBtn {
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
 }
 
 .invitationModal {

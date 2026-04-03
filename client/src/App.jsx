@@ -318,12 +318,6 @@ export default function App() {
 
                 {galleryError ? <div className="error">{galleryError}</div> : null}
 
-                <div className="invitationBtnContainer">
-                  <button className="invitationBtn" onClick={() => setShowInvitation(true)}>
-                    { "📬 View Invitation" }
-                  </button>
-                </div>
-
                 <div className="collage">
                   {gallery.map((item, idx) => {
                     const src = String(item?.src || "");
@@ -395,6 +389,10 @@ export default function App() {
                   </div>
                 )}
               </Section>
+
+              <button className="invitationBtn" onClick={() => setShowInvitation(true)}>
+                📬
+              </button>
               </>
             }
           />
