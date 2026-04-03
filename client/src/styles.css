@@ -1622,7 +1622,7 @@ a {
     width: 100vw;
     max-width: 100vw;
     border-radius: 16px;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 10;
   }
 
   .slideshowSlide {
