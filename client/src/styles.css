@@ -845,6 +845,7 @@ a {
 #memories .sectionHeader {
   justify-content: center;
   text-align: center;
+  color: var(--burgundy2);
 }
 
 .h2 {
