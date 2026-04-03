@@ -85,23 +85,37 @@ function ProgramCard({ program }) {
 }
 
 const SLIDESHOW_ITEMS = [
-  { src: "/media/IMG-20260403-WA0192.jpg", quote: "The moments that take our breath away..." },
-  { src: "/media/IMG-20260403-WA0207.jpg", quote: "Friends that became family." },
-  { src: "/media/IMG-20260403-WA0236.jpg", quote: "We didn't realize we were making memories, we just knew we were having fun." },
-  { src: "/media/IMG-20260403-WA0316.jpg", quote: "Some paths are meant to be crossed." },
-  { src: "/media/IMG-20260403-WA0370.jpg", quote: "A journey of a thousand miles begins with a single step." },
-  { src: "/media/IMG-20260403-WA0268.jpg", quote: "To the nights we felt alive." }
+  { src: "/media/group photos/IMG-20260402-WA0023.jpg", quote: "The moments that take our breath away..." },
+  { src: "/media/group photos/IMG-20260402-WA0024.jpg", quote: "Friends that became family." },
+  { src: "/media/group photos/IMG-20260402-WA0025.jpg", quote: "We didn't realize we were making memories, we just knew we were having fun." },
+  { src: "/media/group photos/IMG-20260402-WA0038.jpg", quote: "Some paths are meant to be crossed." },
+  { src: "/media/group photos/IMG-20260402-WA0046.jpg", quote: "A journey of a thousand miles begins with a single step." },
+  { src: "/media/group photos/IMG-20260403-WA0184.jpg", quote: "To the nights we felt alive." },
+  { src: "/media/group photos/IMG-20260403-WA0211.jpg", quote: "Good times and crazy friends make the best memories." },
+  { src: "/media/group photos/IMG-20260403-WA0323.jpg", quote: "Together is our favorite place to be." },
+  { src: "/media/group photos/WhatsApp Image 2026-04-02 at 6.48.21 PM.jpeg", quote: "Cherishing every single second." },
+  { src: "/media/group photos/WhatsApp Image 2026-04-02 at 6.51.21 PM.jpeg", quote: "Laughter is timeless." },
+  { src: "/media/group photos/fdfsdfsdf.jpeg", quote: "Our unforgettable chapter." },
+  { src: "/media/group photos/h.jpeg", quote: "Here's to the moments that turned into memories." },
+  { src: "/media/group photos/kiu.jpeg", quote: "Forever grateful for these souls." },
+  { src: "/media/group photos/yk.jpeg", quote: "A beautiful ride from start to finish." }
 ];
 
-function SlideshowView() {
+function SlideshowView({ onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % SLIDESHOW_ITEMS.length);
-    }, 4500);
+      setCurrentIndex((prev) => {
+        if (prev === SLIDESHOW_ITEMS.length - 1) {
+          onComplete();
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 2000);
     return () => clearInterval(timer);
-  }, []);
+  }, [onComplete]);
 
   return (
     <div className="slideshowContainer">
@@ -118,10 +132,10 @@ function SlideshowView() {
           </div>
         ))}
       </div>
-      <div className="inviteActions">
-        <Link to="/memories" className="btnPrimary">
-          Continue to Gallery
-        </Link>
+      <div className="inviteActions" style={{ zIndex: 10 }}>
+        <button onClick={onComplete} className="btnPrimary skipBtn" style={{ fontFamily: "inherit" }}>
+          Skip to Gallery
+        </button>
       </div>
     </div>
   );
@@ -129,6 +143,7 @@ function SlideshowView() {
 
 export default function App() {
   const [programs, setPrograms] = useState([]);
+  const [showSlideshow, setShowSlideshow] = useState(true);
   const [loadingPrograms, setLoadingPrograms] = useState(true);
   const [programsError, setProgramsError] = useState("");
   const [gallery, setGallery] = useState([]);
@@ -242,7 +257,7 @@ export default function App() {
                       <div className="wmSmall">FAREWELL</div>
                     </div>
                   </div>
-                  <Link className="btnContinue anim a4" to="/slideshow">
+                  <Link className="btnContinue anim a4" to="/memories">
                     <span className="btnContinueText">Continue</span>
                     <span className="btnContinueArrow" aria-hidden="true" />
                   </Link>
@@ -252,18 +267,11 @@ export default function App() {
           />
 
           <Route
-            path="/slideshow"
-            element={
-              <Section id="slideshow" title="A glimpse back...">
-                <SlideshowView />
-              </Section>
-            }
-          />
-
-          <Route
             path="/memories"
             element={
-              <Section id="memories" title="Gallery of memories">
+              <>
+                {showSlideshow && <SlideshowView onComplete={() => setShowSlideshow(false)} />}
+                <Section id="memories" title="Gallery of memories">
 
                 {galleryError ? <div className="error">{galleryError}</div> : null}
 
@@ -324,6 +332,7 @@ export default function App() {
                   </div>
                 )}
               </Section>
+              </>
             }
           />
 
