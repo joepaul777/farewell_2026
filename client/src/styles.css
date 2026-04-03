@@ -150,8 +150,8 @@ a {
   z-index: 0;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
-  filter: blur(12px) saturate(0.85) contrast(0.8);
-  opacity: 0.5;
+  filter: blur(4px) saturate(0.85) contrast(0.8);
+  opacity: 0.7;
 }
 
 .stripRow {
